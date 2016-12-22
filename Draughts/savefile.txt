@@ -1,0 +1,9 @@
+tf nl tf nl tf nl tf nl 
+nl nl nl tf nl tf nl tf 
+tf nl nl nl nl nl tf nl 
+nl nl nl tf nl tf nl nl 
+nl nl nl nl nl nl nl nl 
+nl ff nl ff nl nl nl ff 
+ff nl ff nl ff nl ff nl 
+nl ff nl ff nl ff nl ff 
+fl

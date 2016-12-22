@@ -15,7 +15,7 @@ public class Draught {
         this.type = type;
     }
 
-    public boolean check_of_move(int x, int y, boolean type){
+    public boolean check_of_move(int x, int y){
         if (type == false) {
             if (this.color == true) {
                 if ((x - this.x == 1) && (Math.abs(y - this.y) == 1) && (x >= 0) && (x <= 7) && (y >= 0) && (y <= 7)) {
@@ -40,14 +40,26 @@ public class Draught {
     }
 
     public boolean check_of_type(){
-        if (x == 7) {
-            return true;
+        if (color == true){
+            if (x == 7) {
+                return true;
+            }else{
+                return false;
+            }
         }else{
-            return false;
+            if (x == 0) {
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 
     public boolean get_type() {return type;}
+
+    public int get_x() {return x;}
+
+    public int get_y() {return y;}
 
     public void set_type(boolean type) {this.type = type;}
 

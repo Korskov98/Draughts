@@ -20,7 +20,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Draughts_main" target="1.5" />
-      <module name="Draughts_test" target="1.5" />
+      <module name="Draughts_test" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

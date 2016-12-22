@@ -1,0 +1,250 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{here}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{caption}
+
+\lstset{ %
+extendedchars=\true,
+keepspaces=true,
+language=C++,					% choose the language of the code
+basicstyle=\footnotesize,		% the size of the fonts that are used for the code
+numbers=left,					% where to put the line-numbers
+numberstyle=\footnotesize,		% the size of the fonts that are used for the line-numbers
+stepnumber=1,					% the step between two line-numbers. If it is 1 each line will be numbered
+numbersep=5pt,					% how far the line-numbers are from the code
+backgroundcolor=\color{white},	% choose the background color. You must add \usepackage{color}
+showspaces=false				% show spaces adding particular underscores
+showstringspaces=false,			% underline spaces within strings
+showtabs=false,					% show tabs within strings adding particular underscores
+frame=single,           		% adds a frame around the code
+tabsize=4,						% sets default tabsize to 2 spaces
+captionpos=b,					% sets the caption-position to bottom
+breaklines=true,				% sets automatic line breaking
+breakatwhitespace=false,		% sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)},			% if you want to add a comment within your code
+postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+}
+\begin{document}	% начало документа
+
+
+\begin{titlepage}	% начало титульной страницы
+
+	\begin{center}		% выравнивание по центру
+
+		\large Санкт-Петербургский Политехнический Университет Петра Великого\\
+		\large Институт компьютерных наук и технологий \\
+		\large Кафедра компьютерных систем и программных технологий\\[6cm]
+		% название института, затем отступ 6см
+		
+		\huge Программирование\\[0.5cm] % название работы, затем отступ 0,5см
+		\large Отчет по курсовой работе\\[0.1cm]
+		\large "Шашки"\\[5cm]
+
+	\end{center}
+
+
+	\begin{flushright} % выравнивание по правому краю
+		\begin{minipage}{0.25\textwidth} % врезка в половину ширины текста
+			\begin{flushleft} % выровнять её содержимое по левому краю
+
+				\large\textbf{Работу выполнил:}\\
+				\large Корсков А.В.\\
+				\large {Группа:} 23501/4\\
+				
+				\large \textbf{Преподаватель:}\\
+				\large Вылегжанина К.Д.
+				
+
+			\end{flushleft}
+		\end{minipage}
+	\end{flushright}
+	
+	\vfill % заполнить всё доступное ниже пространство
+
+	\begin{center}
+	\large Санкт-Петербург\\
+	\large \the\year % вывести дату
+	\end{center} % закончить выравнивание по центру
+
+\thispagestyle{empty} % не нумеровать страницу
+\end{titlepage} % конец титульной страницы
+
+\vfill % заполнить всё доступное ниже пространство
+% Содержание
+\tableofcontents
+\newpage
+
+\section{Игра Шашки}
+\subsection{Задание}
+У нас имеется прямоугольное поле размером 8х8, которое окрашено в чёрный и белый цвет. На этом поле расставленны шашки. Два игрока по очереди передвигают свои шашки. Целью игры является уничтожение всех шашек соперника. У кого шашек не осталось, тот и считается проигравшим.
+
+\subsection{Правила работы программы}
+Всё действие происходит на поле размером 8х8. Во время партии каждому игроку принадлежат шашки одного цвета: чёрного или белого. Цель игры — лишить противника возможности хода путём взятия или запирания всех его шашек. Все шашки, участвующие в партии, выставляются перед началом игры на доску. Далее они передвигаются по полям доски и могут быть сняты с неё в случае боя шашкой противника.Брать шашку, находящуюся под боем, обязательно.Существует только два вида шашек: простые и дамки. В начале партии все шашки простые. Простая шашка может превратиться в дамку, если она достигнет последнего противоположного горизонтального ряда доски (дамочного поля).Простые шашки ходят только вперёд на следующее поле. Дамки могут ходить и вперёд и назад.
+
+\subsection{Концепция}
+Готовый проект должен моделировать игру между двумя игроками в шашки. Пользователь должен иметь возможность наблюдать за текущим состоянием игры, передвигать шашки и бить шашки противника. Также важной функцией программы является возможность сохранить текущее состояние игры в файл и загрузка игры из файла.
+
+\subsection{Минимально работоспособный продукт}
+Минимально работоспособный продукт должен уметь: предоставить пользователю информацию о текущем состоянии игры, давать игроку возможность передвигать свои шашки, уничтожать шашки противника и сохранение и загрузка игры в файл.
+
+
+\subsection{Диаграмма прецедентов использования}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.4, height=7cm]{Diagram1}
+		\caption{Диаграмма прецедентов использования} 
+		\label{pic:Diagram1} % название для ссылок внутри кода
+	\end{center}
+\end{figure}
+
+\section{Проектрование приложения, реализующего игру Шашки}
+Программа разделена на 4 подпроекта: app - консольное приложение, core - библиотека, реализующая игру Шашки, gui - графическое приложение, test - тесты для программы.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.4, height=7cm]{Diagram2}
+		\caption{Диаграмма прецедентов использования} 
+		\label{pic:Diagram2} % название для ссылок внутри кода
+	\end{center}
+\end{figure}
+
+\subsection{Библиотека}
+При написании проекта, была создана библиотека. В ней находятся все необходимые классы для создания и работы игры. Один из классов (api) создан для предоставления всех действий над моделью.
+
+\noindent В API выделены следующие методы: 
+\begin{itemize}
+\item move\_draught - метод, передвигающий шашку.
+\item destroy\_draught - метод, уничтожающий шашку противника.
+\item save\_file - метод, сохраняющий поле в файл.
+\item load\_file - метод, загружающий поле из файла.
+\item get\_statistics - метод, анализирующий поле и выдающий статистику.
+\item check\_destruction\_around - метод, проверяющий может ли шашка кого-нибудь уничтожить вокруг себя.
+\end{itemize}
+
+
+\section{Реализация игры Шашки}
+\subsection{Версии программ}
+Операционная система: Windows 8, среда разработки: Intellij IDEA 2016.2.4, компилятор: Gradle 3.0, Java 1.8.0.120.
+
+\subsection{Консольное приложение}
+Консольное приложение позволяет работать с моделью через консоль.
+
+\noindent Основные классы, выделенные в консольном приложении:
+\begin{itemize}
+\item Класс Console\_ui. Сначала выводит главное меню, где можно начать новую игру или загрузить. Также есть метод выводящий второе меню, где можно передвинуть шашку, уничтожить шашку противника, вывести текущее состояние поля в консоль и сохранить текущее состояние поля в консоль. Также в классе есть вспомогательный метод, задачей которого является вывод поля в консоль.
+\end{itemize}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.5]{console}
+		\caption{Главное меню консольного приложения} 
+		\label{pic:console} % название для ссылок внутри кода
+	\end{center}
+\end{figure}
+
+На рис \ref{pic:console} представлено главное меню приложения. Есть возможность создать новое поле с шашками, загрузить поле из файла и выйти из программы. 
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.5]{console2}
+		\caption{Поле и второе меню в консольном приложении} 
+		\label{pic:secondMenu} % название для ссылок внутри кода
+	\end{center}
+\end{figure}
+
+На рис \ref{pic:secondMenu} показано поле и внизу меню, в котором можно передвинуть шашку, отобразить поле в консоли, уничтожить шашку противника и вернуться назад в главное меню.
+
+\subsection{Библиотека}
+\noindent Основные классы, выделенные в библиотеке:
+\begin{itemize}
+\item Класс Draught. Реализует шашку. Содержит координаты шашки, её цвет и тип. Присутствуют методы, возвращающие и задающие координаты и состояние шашки, проверяющий может ли данная шашка сделать заданный ход и ещё один метод, проверяющий достигла ли шашка концаа поля.
+\item Класс Field. Класс представляет поле игры. Содержит двумерный массив клеток и цвет текущего хода. Присутствуют методы, возвращающие и задающие двумерном массиве и цвет текущего хода, также есть методы: проверяющий свободна ли данная клетка и проверяющий  может ли она уничтожить данную шашку противника.	
+\item Класс Api. Класс, предоставляющий все методы, доступные над игрой. Позволяет сделать ход шашкой, уничтожить шашку противника, сохранить поле в файл, загрузить поле из файла, получить данные о текущем состоянии поля и метод, узнающий может ли шашка уничтожить кого-нибудь вокруг себя
+\end{itemize}
+
+\subsection{Графическое приложение}
+Графическое приложение позволяет играть через окна графического приложения.
+
+\noindent Основные классы, выделенные в графическом приложении. 
+\begin{itemize}
+\item Класс Frame. Главное окно приложения. Присутствуют кнопки «Новая игра», «Загрузить поле», «Выход».
+\item Класс Board. Окно, где присутствуют кнопки «Сохранить поле», «Назад», а также в этом окне происходит отрисовка поля .
+\item Класс BorderPanel. Класс отвечающий за отрисовку поля. Все действия над полем происходят именно в этом классе.
+\end{itemize}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.5]{gui}
+		\caption{Главное меню графического приложения} 
+		\label{pic:graphicsMeinMenu} % название для ссылок внутри кода
+	\end{center}
+\end{figure}
+
+На рис \ref{pic:graphicsMeinMenu} представлено главное окно приложения. В нём пользователю можно начать играть, загрузить поле из файла и выйти из игры. 
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.5]{gui2}
+		\caption{Представление поля в графическом приложении} 
+		\label{pic:field} % название для ссылок внутри кода
+	\end{center}
+\end{figure}
+
+На рис \ref{pic:field} – окно с полем, внизу есть кнопки для сохранения поля в файл и возвращения в главное меню. В центре расположено поле с шашками, справа и слева текущие данные об игре для каждой из сторон, между полем и кнопками есть информация о том, чей ход в данный момент.
+
+\section{Процесс обеспечения качества и тестирование}
+\subsection{Тестирование}
+Приложение содержит автоматические тесты. Протестированы некоторые основные функции. Проверяется проверяется свободна ли клетка, может ли шашка сделать данный ход и может ли шашка уничтожить данную шашку противника.
+
+\section{Вывод}
+По окончании семестра автор проекта научился писать программы на языке Java, делать графический интерфейс с помощью Swing, а также получил опыт работы с большими проектами на Java, содержащими много классов и имеющих как консольное приложение, так и графическое.
+
+\section{Приложение 1. Листинги кода}
+\subsection{Консольное приложение}
+\lstinputlisting[]
+{../Draughts/src/main/java/ConsoleApp/Console_Ui.java}
+\newpage
+
+\subsection{Графическое приложение}
+\lstinputlisting[]
+{../Draughts/src/main/java/Graphic_Ui/Frame.java}
+\newpage
+
+\lstinputlisting[]
+{../Draughts/src/main/java/Graphic_Ui/Board.java}
+\newpage
+
+\lstinputlisting[]
+{../Draughts/src/main/java/Graphic_Ui/BorderPanel.java}
+\newpage
+
+\subsection{Библиотека}
+
+\lstinputlisting[]
+{../Draughts/src/main/java/Core/Api.java}
+\newpage
+
+\lstinputlisting[]
+{../Draughts/src/main/java/Core/Draught.java}
+\newpage
+
+\lstinputlisting[]
+{../Draughts/src/main/java/Core/Field.java}
+\newpage
+
+\subsection{Тесты}
+
+\lstinputlisting[]
+{../Draughts/src/test/java/Test_Draughts.java}
+\newpage
+\end{document}
